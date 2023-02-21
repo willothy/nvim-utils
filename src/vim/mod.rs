@@ -7,6 +7,7 @@
 //! - Added `vim::ext` for functions that don't directly map to the Neovim api but make use of it or extend it
 //! - Not all functions are implemented yet
 
+pub mod api;
 pub mod ext;
 pub mod func;
 pub mod keymap;
