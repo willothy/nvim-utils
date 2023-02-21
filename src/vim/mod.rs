@@ -18,6 +18,7 @@ use crate::prelude::*;
 ///
 /// ## Example
 /// ```rust
+/// use crate::prelude::*;
 /// fn my_module(lua: &Lua) -> LuaResult<()> {
 ///     let vim = vim::get(lua)?;
 ///     let vim_version = vim.call_function("version", ())?;
@@ -32,6 +33,7 @@ pub fn get(lua: &Lua) -> LuaResult<LuaTable> {
 ///
 /// ## Example
 /// ```rust
+/// use crate::prelude::*;
 /// fn my_module(lua: &Lua) -> LuaResult<()> {
 ///     vim::cmd(lua, "echo 'Hello, world!'")?;
 ///     vim::cmd(lua, "terminal")?;
@@ -45,6 +47,7 @@ pub fn cmd(lua: &Lua, cmd: String) -> LuaResult<()> {
 ///
 /// ## Example
 /// ```rust
+/// use crate::prelude::*;
 /// fn my_module(lua: &Lua) -> LuaResult<()> {
 ///     let table = lua.create_table()?;
 ///     table.set("foo", "bar")?;
@@ -59,9 +62,9 @@ pub fn inspect<'a>(lua: &'a Lua, value: impl ToLua<'a>) -> LuaResult<String> {
 ///
 /// ## Example
 /// ```rust
-/// match result {
-///     Ok(_) => vim::notify(lua, "Success!", vim::log::LogLevel::Info)?,
-///     Err(e) => vim::notify(lua, &format!("Error: {}", e), vim::log::LogLevel::Error)?,
+/// use crate::prelude::*;
+/// fn my_module(lua: &Lua) -> LuaResult<()> {
+///     vim::notify(lua, "Loaded module!", vim::log::LogLevel::Info)?
 /// }
 /// ```
 pub fn notify(lua: &Lua, msg: &str, log_level: log::LogLevel) -> LuaResult<()> {
