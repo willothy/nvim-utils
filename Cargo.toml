@@ -4,7 +4,6 @@ version = "0.1.0"
 edition = "2021"
 description = "Utilities for writing neovim plugins in rust"
 authors = ["Will Hopkins <willothyh@gmail.com>"]
-license = "MIT"
 license-file = "LICENSE"
 readme = "README.md"
 repository = "https://github.com/willothy/nvim-utils"
