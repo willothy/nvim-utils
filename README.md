@@ -1,8 +1,4 @@
-
-<span style="font-size: 2.25rem; font-weight: bold;">
-    nvim-utils:
-</span>
-<span style="font-size: 1.6rem">Utilities for writing neovim plugins in rust</span>
+# nvim-utils: Utilities for writing neovim plugins in rust
 
 Interacting with Neovim's lua api in Rust can be a bit of a pain. `nvim-utils` aims to make it easier and quicker to develop Neovim plugins in Rust by removing as much of the required boilerplate as possible, and implementing bindings for the `vim.*` lua api.
 
