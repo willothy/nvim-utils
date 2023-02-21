@@ -37,7 +37,9 @@ use std::future::Future;
 ///     let module = builder.build()?;
 ///
 ///     // If you need to return a LuaValue instead of a LuaTable, you can use mlua's `to_lua` method instead of `build`
-///     let value = builder.to_lua(lua)?;
+///     // let value = builder.to_lua(lua)?;
+///
+///     Ok(module)
 /// }
 /// ```
 #[derive(Debug)]

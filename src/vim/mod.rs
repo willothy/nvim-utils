@@ -18,11 +18,12 @@ use crate::prelude::*;
 ///
 /// ## Example
 /// ```rust
-/// use crate::prelude::*;
-/// fn my_module(lua: &Lua) -> LuaResult<()> {
-///     let vim = vim::get(lua)?;
-///     let vim_version = vim.call_function("version", ())?;
-///     println!("Vim version: {}", vim::inspect(lua, vim_version));
+/// use nvim_utils::prelude::*;
+/// fn my_module(lua: &mlua::prelude::Lua) -> mlua::prelude::LuaResult<()> {
+///     let global_vim = vim::get(lua)?;
+///     let vim_version: LuaTable = global_vim.call_function("version", ())?;
+///     println!("Vim version: {}", vim::inspect(lua, vim_version)?);
+///     Ok(())
 /// }
 /// ```
 pub fn get(lua: &Lua) -> LuaResult<LuaTable> {
@@ -33,13 +34,13 @@ pub fn get(lua: &Lua) -> LuaResult<LuaTable> {
 ///
 /// ## Example
 /// ```rust
-/// use crate::prelude::*;
-/// fn my_module(lua: &Lua) -> LuaResult<()> {
+/// use nvim_utils::prelude::*;
+/// fn my_module(lua: &mlua::prelude::Lua) -> mlua::prelude::LuaResult<()> {
 ///     vim::cmd(lua, "echo 'Hello, world!'")?;
-///     vim::cmd(lua, "terminal")?;
+///     vim::cmd(lua, "terminal")
 /// }
 /// ```
-pub fn cmd(lua: &Lua, cmd: String) -> LuaResult<()> {
+pub fn cmd(lua: &Lua, cmd: &str) -> LuaResult<()> {
     self::get(lua)?.call_function("cmd", cmd)
 }
 
@@ -47,11 +48,12 @@ pub fn cmd(lua: &Lua, cmd: String) -> LuaResult<()> {
 ///
 /// ## Example
 /// ```rust
-/// use crate::prelude::*;
+/// use nvim_utils::prelude::*;
 /// fn my_module(lua: &Lua) -> LuaResult<()> {
 ///     let table = lua.create_table()?;
 ///     table.set("foo", "bar")?;
 ///     let inspect = vim::inspect(lua, table)?;
+///     Ok(())
 /// }
 /// ```
 pub fn inspect<'a>(lua: &'a Lua, value: impl ToLua<'a>) -> LuaResult<String> {
@@ -62,9 +64,9 @@ pub fn inspect<'a>(lua: &'a Lua, value: impl ToLua<'a>) -> LuaResult<String> {
 ///
 /// ## Example
 /// ```rust
-/// use crate::prelude::*;
-/// fn my_module(lua: &Lua) -> LuaResult<()> {
-///     vim::notify(lua, "Loaded module!", vim::log::LogLevel::Info)?
+/// use nvim_utils::prelude::*;
+/// fn my_module(lua: &mlua::prelude::Lua) -> mlua::prelude::LuaResult<()> {
+///     vim::notify(lua, "Loaded module!", vim::log::LogLevel::Info)
 /// }
 /// ```
 pub fn notify(lua: &Lua, msg: &str, log_level: log::LogLevel) -> LuaResult<()> {

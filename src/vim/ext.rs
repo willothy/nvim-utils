@@ -7,13 +7,18 @@ use std::path::PathBuf;
 ///
 /// ## Example
 /// ```rust
-/// use crate::prelude::*;
-/// vim::ext::mksession(lua, PathBuf::from("~/.sessions/session.vim"))?;
+/// use nvim_utils::prelude::*;
+/// use std::path::PathBuf;
+///
+/// fn my_module(lua: &Lua) -> LuaResult<()> {
+///     vim::ext::mksession(lua, PathBuf::from("~/.sessions/session.vim"))?;
+///     Ok(())
+/// }
 /// ```
 pub fn mksession<'a>(lua: &Lua, path: PathBuf) -> LuaResult<()> {
     vim::cmd(
         lua,
-        format!("mksession! {}", String::from(path.to_string_lossy())),
+        &format!("mksession! {}", String::from(path.to_string_lossy())),
     )
 }
 
