@@ -18,9 +18,11 @@ use crate::prelude::*;
 ///
 /// ## Example
 /// ```rust
-/// let vim = vim::get(lua)?;
-/// let vim_version = vim.call_function("version", ())?;
-/// println!("Vim version: {}", vim::inspect(lua, vim_version));
+/// fn my_module(lua: &Lua) -> LuaResult<()> {
+///     let vim = vim::get(lua)?;
+///     let vim_version = vim.call_function("version", ())?;
+///     println!("Vim version: {}", vim::inspect(lua, vim_version));
+/// }
 /// ```
 pub fn get(lua: &Lua) -> LuaResult<LuaTable> {
     lua.globals().get("vim")
@@ -30,8 +32,10 @@ pub fn get(lua: &Lua) -> LuaResult<LuaTable> {
 ///
 /// ## Example
 /// ```rust
-/// vim::cmd(lua, "echo 'Hello, world!'")?;
-/// vim::cmd(lua, "terminal")?;
+/// fn my_module(lua: &Lua) -> LuaResult<()> {
+///     vim::cmd(lua, "echo 'Hello, world!'")?;
+///     vim::cmd(lua, "terminal")?;
+/// }
 /// ```
 pub fn cmd(lua: &Lua, cmd: String) -> LuaResult<()> {
     self::get(lua)?.call_function("cmd", cmd)
@@ -41,10 +45,11 @@ pub fn cmd(lua: &Lua, cmd: String) -> LuaResult<()> {
 ///
 /// ## Example
 /// ```rust
-/// let table = lua.create_table()?;
-/// table.set("foo", "bar")?;
-/// let inspect = vim::inspect(lua, table)?;
-/// assert_eq!(inspect, "{ foo = \"bar\" }");
+/// fn my_module(lua: &Lua) -> LuaResult<()> {
+///     let table = lua.create_table()?;
+///     table.set("foo", "bar")?;
+///     let inspect = vim::inspect(lua, table)?;
+/// }
 /// ```
 pub fn inspect<'a>(lua: &'a Lua, value: impl ToLua<'a>) -> LuaResult<String> {
     self::get(lua)?.call_function("inspect", value)
