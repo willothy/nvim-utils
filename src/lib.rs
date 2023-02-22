@@ -36,6 +36,7 @@ pub mod prelude {
     #[cfg_attr(docsrs, doc(cfg(feature = "serde")))]
     pub use mlua::serde::{Deserializer, LuaSerdeExt, Serializer};
 
+    pub use mlua::lua_module;
     pub use mlua::prelude::*;
 }
 
