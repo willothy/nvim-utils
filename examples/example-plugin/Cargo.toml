@@ -1,0 +1,29 @@
+[package]
+name = "example"
+version = "0.1.0"
+edition = "2021"
+
+[lib]
+crate-type = ["cdylib"]
+
+[dependencies]
+mlua = { version = "0.8.7", features = [
+  "luajit",
+  "vendored",
+  "module"
+]}
+nvim-utils = { path = "../../" }
+
+# required config for dylibs on x86 macOS
+[target.x86_64-apple-darwin]
+rustflags = [
+  "-C", "link-arg=-undefined",
+  "-C", "link-arg=dynamic_lookup",
+]
+
+# required config for dylibs on m1/m2 macOS
+[target.aarch64-apple-darwin]
+rustflags = [
+  "-C", "link-arg=-undefined",
+  "-C", "link-arg=dynamic_lookup",
+]
