@@ -21,7 +21,7 @@ jobs:
     - name: Setup Rust
       run:  rustup update ${{ matrix.toolchain }} && rustup default ${{ matrix.toolchain }}
     - name: Setup Nextest
-      run:  cargo install cargo-nextest
+      run:  curl -LsSf https://get.nexte.st/latest/linux | tar zxf - -C ${CARGO_HOME:-~/.cargo}/bin
     - name: Setup Neovim
       uses: MunifTanjim/setup-neovim-action@v1.1.0
     - name: Checkout
