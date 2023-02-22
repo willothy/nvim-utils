@@ -29,4 +29,4 @@ jobs:
     - name: Build
       run:  cargo build --verbose
     - name: Run tests
-      run:  cargo nextest run -E 'test(nvim)'
+      run:  cargo nextest run -E 'test(nvim)' --run-ignored all -P ci -V --status-level all --all-features
