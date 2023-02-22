@@ -148,9 +148,9 @@ impl<'a> ModuleBuilder<'a> {
     }
 
     /// Adds a lua value (any) to the module
-    pub fn add_value(&mut self, name: &str, value: LuaValue<'a>) -> LuaResult<&mut Self> {
+    pub fn add_value(&mut self, name: &str, value: impl ToLua<'a>) -> LuaResult<&mut Self> {
         self.check_collision(name)?;
-        self.fields.insert(name.to_owned(), value);
+        self.fields.insert(name.to_owned(), value.to_lua(self.lua)?);
         Ok(self)
     }
 
@@ -252,9 +252,9 @@ impl<'a> ModuleBuilder<'a> {
     }
 
     /// Adds a lua value (any) to the module, consuming and returning the builder
-    pub fn with_value(mut self, name: &str, value: LuaValue<'a>) -> LuaResult<Self> {
+    pub fn with_value(mut self, name: &str, value: impl ToLua<'a>) -> LuaResult<Self> {
         self.check_collision(name)?;
-        self.fields.insert(name.to_owned(), value);
+        self.fields.insert(name.to_owned(), value.to_lua(self.lua)?);
         Ok(self)
     }
 
