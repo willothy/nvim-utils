@@ -28,7 +28,7 @@ pub fn test_plugin() -> Result<(), Box<dyn std::error::Error>> {
 
     let target_dir = var(CARGO_TARGET_DIR)
         .map(|p| PathBuf::from(p))
-        .unwrap_or(manifest_dir.join("target"))
+        .unwrap_or_else(|_| manifest_dir.join("target"))
         .join(profile)
         .join("deps");
 
@@ -113,7 +113,7 @@ vim.cmd('qa!')
     assert!(output.stdout.is_empty(), "Neovim stdout was not empty");
 
     // Remove carriage returns from stderr to make it easier to compare
-    let stderr = String::from_utf8(output.stderr)?.replace("\r", "");
+    let stderr = String::from_utf8(output.stderr)?.replace('\r', "");
     assert_eq!(
         stderr, "Hello from Rust and NeoVim!\nExample Author",
         "out:{}",
