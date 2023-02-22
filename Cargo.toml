@@ -13,6 +13,11 @@ categories = ["api-bindings", "development-tools::ffi", "text-editors"]
 [badges]
 maintentance = { status = "actively-developed" }
 
+[[example]]
+name = "example-plugin"
+path = "examples/example-plugin/src/lib.rs"
+crate-type = ["cdylib"]
+
 [features]
 default = ["vim", "builder"]
 builder = []

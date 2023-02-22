@@ -17,7 +17,8 @@
 //! - `async` enables async functions in [`builder::ModuleBuilder`], and the `async` feature in mlua (disabled by default)
 //! - `send` enables the `send` feature for [`mlua`], which enables `Send` for lua types (disabled by default)
 
-/// Includes [`mlua::prelude`], [`vim`], [`vim::ext::log`] and [`mlua::serde`] if the corresponding features are enabled
+/// Includes [`mlua::prelude`], [`vim`], [`vim::ext::log`], and [`builder::ModuleBuilder`] if the corresponding features are enabled
+/// Also includes [`mlua::serde`] if the `serde` feature is enabled
 pub mod prelude {
     #[cfg(feature = "vim")]
     #[cfg_attr(docsrs, doc(cfg(feature = "vim")))]
@@ -26,6 +27,10 @@ pub mod prelude {
     #[cfg(feature = "vim")]
     #[cfg_attr(docsrs, doc(cfg(feature = "vim")))]
     pub use crate::vim::ext::log;
+
+    #[cfg(feature = "builder")]
+    #[cfg_attr(docsrs, doc(cfg(feature = "builder")))]
+    pub use crate::builder::ModuleBuilder;
 
     #[cfg(feature = "serde")]
     #[cfg_attr(docsrs, doc(cfg(feature = "serde")))]
