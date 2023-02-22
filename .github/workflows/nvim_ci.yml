@@ -2,9 +2,7 @@ name: Neovim Tests
 
 on:
   push:
-    branches: [ "main" ]
   pull_request:
-    branches: [ "main" ]
   workflow_dispatch:
 
 env:
@@ -14,7 +12,14 @@ jobs:
   nvim_tests:
     name: Run Neovim Tests
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        toolchain:
+          - stable
+          - nightly
     steps:
+    - name: Setup Rust
+      run:  rustup update ${{ matrix.toolchain }} && rustup default ${{ matrix.toolchain }}
     - name: Setup Nextest
       run:  cargo install cargo-nextest
     - name: Setup Neovim

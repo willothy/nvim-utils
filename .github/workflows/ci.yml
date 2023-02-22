@@ -3,6 +3,7 @@ name: Cargo Build & Test
 on:
   push:
   pull_request:
+  workflow_dispatch:
 
 env:
   CARGO_TERM_COLOR: always
@@ -15,7 +16,6 @@ jobs:
       matrix:
         toolchain:
           - stable
-          - beta
           - nightly
     steps:
       - name: Setup Nextest
