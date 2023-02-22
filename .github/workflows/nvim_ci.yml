@@ -1,0 +1,27 @@
+name: Neovim Tests
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+env:
+  CARGO_TERM_COLOR: always
+
+jobs:
+  nvim_tests:
+    name: Run Neovim Tests
+    runs-on: ubuntu-latest
+    steps:
+    - name: Setup Nextest
+      run:  cargo install cargo-nextest
+    - name: Setup Neovim
+      uses: MunifTanjim/setup-neovim-action@v1.1.0
+    - name: Checkout
+      uses: actions/checkout@v3
+    - name: Build
+      run:  cargo build --verbose
+    - name: Run tests
+      run:  cargo nextest run -E 'test(nvim)'
