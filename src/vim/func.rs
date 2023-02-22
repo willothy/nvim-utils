@@ -12,3 +12,7 @@ pub fn stdpath(lua: &Lua, path: &str) -> LuaResult<String> {
 pub fn tmpname(lua: &Lua) -> LuaResult<String> {
     self::get(lua)?.get::<_, LuaFunction>("tempname")?.call(())
 }
+
+pub fn line(lua: &Lua, line: &str) -> LuaResult<String> {
+    self::get(lua)?.get::<_, LuaFunction>("line")?.call(line)
+}
