@@ -124,6 +124,21 @@ impl<'a> ModuleBuilder<'a> {
         Ok(self)
     }
 
+    /// Adds a table to the module from an iterator
+    pub fn add_table_from<K, V, I>(&mut self, name: &str, iterator: I) -> LuaResult<&mut Self>
+    where
+        K: ToLua<'a>,
+        V: ToLua<'a>,
+        I: IntoIterator<Item = (K, V)>,
+    {
+        self.check_collision(name)?;
+        self.fields.insert(
+            name.to_owned(),
+            self.lua.pack(self.lua.create_table_from(iterator)?)?,
+        );
+        Ok(self)
+    }
+
     /// Adds an empty table to the module
     pub fn add_table_empty(&mut self, name: &str) -> LuaResult<&mut Self> {
         self.check_collision(name)?;
@@ -133,9 +148,37 @@ impl<'a> ModuleBuilder<'a> {
     }
 
     /// Adds a lua value (any) to the module
-    pub fn add_value(&mut self, name: &str, value: LuaValue<'a>) -> LuaResult<&mut Self> {
+    pub fn add_value(&mut self, name: &str, value: impl ToLua<'a>) -> LuaResult<&mut Self> {
         self.check_collision(name)?;
-        self.fields.insert(name.to_owned(), value);
+        self.fields.insert(name.to_owned(), value.to_lua(self.lua)?);
+        Ok(self)
+    }
+
+    /// Adds a string to the module
+    pub fn add_string(&mut self, name: &str, value: &str) -> LuaResult<&mut Self> {
+        self.check_collision(name)?;
+        self.fields.insert(name.to_owned(), value.to_lua(self.lua)?);
+        Ok(self)
+    }
+
+    /// Adds an integer to the module
+    pub fn add_int(&mut self, name: &str, value: i64) -> LuaResult<&mut Self> {
+        self.check_collision(name)?;
+        self.fields.insert(name.to_owned(), value.to_lua(self.lua)?);
+        Ok(self)
+    }
+
+    /// Adds a number to the module
+    pub fn add_float(&mut self, name: &str, value: f64) -> LuaResult<&mut Self> {
+        self.check_collision(name)?;
+        self.fields.insert(name.to_owned(), value.to_lua(self.lua)?);
+        Ok(self)
+    }
+
+    /// Adds a boolean to the module
+    pub fn add_bool(&mut self, name: &str, value: bool) -> LuaResult<&mut Self> {
+        self.check_collision(name)?;
+        self.fields.insert(name.to_owned(), value.to_lua(self.lua)?);
         Ok(self)
     }
 
@@ -185,6 +228,21 @@ impl<'a> ModuleBuilder<'a> {
         Ok(self)
     }
 
+    /// Adds a table to the module from an iterator, consuming and returning the builder
+    pub fn with_table_from<K, V, I>(mut self, name: &str, iterator: I) -> LuaResult<Self>
+    where
+        K: ToLua<'a>,
+        V: ToLua<'a>,
+        I: IntoIterator<Item = (K, V)>,
+    {
+        self.check_collision(name)?;
+        self.fields.insert(
+            name.to_owned(),
+            self.lua.pack(self.lua.create_table_from(iterator)?)?,
+        );
+        Ok(self)
+    }
+
     /// Adds an empty table to the module, consuming and returning the builder
     pub fn with_table_empty(mut self, name: &str) -> LuaResult<Self> {
         self.check_collision(name)?;
@@ -194,9 +252,37 @@ impl<'a> ModuleBuilder<'a> {
     }
 
     /// Adds a lua value (any) to the module, consuming and returning the builder
-    pub fn with_value(mut self, name: &str, value: LuaValue<'a>) -> LuaResult<Self> {
+    pub fn with_value(mut self, name: &str, value: impl ToLua<'a>) -> LuaResult<Self> {
         self.check_collision(name)?;
-        self.fields.insert(name.to_owned(), value);
+        self.fields.insert(name.to_owned(), value.to_lua(self.lua)?);
+        Ok(self)
+    }
+
+    /// Adds a string to the module, consuming and returning the builder
+    pub fn with_string(mut self, name: &str, value: &str) -> LuaResult<Self> {
+        self.check_collision(name)?;
+        self.fields.insert(name.to_owned(), value.to_lua(self.lua)?);
+        Ok(self)
+    }
+
+    /// Adds an integer to the module, consuming and returning the builder
+    pub fn with_int(mut self, name: &str, value: i64) -> LuaResult<Self> {
+        self.check_collision(name)?;
+        self.fields.insert(name.to_owned(), value.to_lua(self.lua)?);
+        Ok(self)
+    }
+
+    /// Adds a number to the module, consuming and returning the builder
+    pub fn with_float(mut self, name: &str, value: f64) -> LuaResult<Self> {
+        self.check_collision(name)?;
+        self.fields.insert(name.to_owned(), value.to_lua(self.lua)?);
+        Ok(self)
+    }
+
+    /// Adds a boolean to the module, consuming and returning the builder
+    pub fn with_bool(&mut self, name: &str, value: bool) -> LuaResult<&mut Self> {
+        self.check_collision(name)?;
+        self.fields.insert(name.to_owned(), value.to_lua(self.lua)?);
         Ok(self)
     }
 
