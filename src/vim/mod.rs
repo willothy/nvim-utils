@@ -42,7 +42,7 @@ pub fn get(lua: &Lua) -> LuaResult<LuaTable> {
 /// }
 /// ```
 pub fn cmd(lua: &Lua, cmd: &str) -> LuaResult<()> {
-    self::get(lua)?.call_function("cmd", cmd)
+    self::get(lua)?.get::<_, LuaTable>("cmd")?.call(cmd)
 }
 
 /// Corresponds to `vim.inspect()`
