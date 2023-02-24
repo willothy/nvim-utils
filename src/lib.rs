@@ -15,6 +15,7 @@
 //! - `vim` enables the [`vim`] module (enabled by default)
 //! - `async` enables async functions in [`builder::ModuleBuilder`], and the `async` feature in mlua (disabled by default)
 //! - `send` enables the `send` feature for [`mlua`], which enables `Send` for lua types (disabled by default)
+//! - `unstable` includes unstable / untested API features (disabled by default)
 
 /// Includes [`mlua::prelude`], [`vim`], [`vim::ext::log`], and [`builder::ModuleBuilder`] if the corresponding features are enabled
 /// Also includes [`mlua::serde`] if the `serde` feature is enabled

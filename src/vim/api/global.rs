@@ -1,3 +1,5 @@
+#![cfg(feature = "unstable")]
+#![cfg_attr(docsrs, doc(cfg(feature = "unstable")))]
 use crate::prelude::*;
 
 /// Corresponds to `vim.api.nvim_stats`
