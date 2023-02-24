@@ -59,17 +59,25 @@ impl<'a> FromLua<'a> for GetLineResult {
 }
 
 impl GetLineResult {
-    pub fn into_string(self) -> Option<String> {
+    pub fn into_string(self) -> LuaResult<String> {
         match self {
-            GetLineResult::String(s) => Some(s),
-            _ => None,
+            GetLineResult::String(s) => Ok(s),
+            _ => Err(LuaError::FromLuaConversionError {
+                from: "LuaValue",
+                to: "GetLineResult",
+                message: Some("Invalid type".to_string()),
+            }),
         }
     }
 
-    pub fn into_table(self) -> Option<Vec<String>> {
+    pub fn into_table(self) -> LuaResult<Vec<String>> {
         match self {
-            GetLineResult::Table(t) => Some(t),
-            _ => None,
+            GetLineResult::Table(t) => Ok(t),
+            _ => Err(LuaError::FromLuaConversionError {
+                from: "LuaValue",
+                to: "GetLineResult",
+                message: Some("Invalid type".to_string()),
+            }),
         }
     }
 }

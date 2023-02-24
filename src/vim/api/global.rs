@@ -403,7 +403,9 @@ pub fn nvim_get_proc<'a>(lua: &'a Lua, pid: LuaInteger) -> LuaResult<LuaValue<'a
 // TODO: nvim_input_mouse
 
 pub fn nvim_list_bufs(lua: &Lua) -> LuaResult<Vec<LuaInteger>> {
-    vim::api::get(lua)?
-        .get::<_, LuaFunction>("nvim_list_bufs")?
-        .call(())
+    vim::api::get(lua)?.call_function("nvim_list_bufs", ())
+}
+
+pub fn nvim_exec<'a>(lua: &'a Lua, cmd: &str, output: bool) -> LuaResult<LuaValue<'a>> {
+    vim::api::get(lua)?.call_function("nvim_exec", (cmd, output))
 }
