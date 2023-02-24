@@ -1,47 +1,55 @@
 use crate::prelude::*;
 
+/// Corresponds to `vim.api.nvim_stats`
 pub fn nvim_stats(lua: &Lua) -> LuaResult<LuaTable> {
     vim::api::get(lua)?
         .get::<_, LuaFunction>("nvim_stats")?
         .call(())
 }
 
+/// Corresponds to `vim.api.nvim_chan_send`
 pub fn nvim_chan_send(lua: &Lua, chan: i32, data: &str) -> LuaResult<()> {
     vim::api::get(lua)?
         .get::<_, LuaFunction>("nvim_chan_send")?
         .call((chan, data))
 }
 
-pub fn nvim_create_buf(lua: &Lua, listed: bool, scratch: bool) -> LuaResult<LuaInteger> {
+/// Corresponds to `vim.api.nvim_create_buf`
+pub fn nvim_create_buf(lua: &Lua, listed: bool, scratch: bool) -> LuaResult<i64> {
     vim::api::get(lua)?
         .get::<_, LuaFunction>("nvim_create_buf")?
         .call((listed, scratch))
 }
 
+/// Corresponds to `vim.api.nvim_del_current_line`
 pub fn nvim_del_current_line(lua: &Lua) -> LuaResult<()> {
     vim::api::get(lua)?
         .get::<_, LuaFunction>("nvim_del_current_line")?
         .call(())
 }
 
+/// Corresponds to `vim.api.nvim_del_keymap`
 pub fn nvim_del_keymap(lua: &Lua, mode: &str, lhs: &str) -> LuaResult<()> {
     vim::api::get(lua)?
         .get::<_, LuaFunction>("nvim_del_keymap")?
         .call((mode, lhs))
 }
 
+/// Corresponds to `vim.api.nvim_del_mark`
 pub fn nvim_del_mark(lua: &Lua, name: &str) -> LuaResult<bool> {
     vim::api::get(lua)?
         .get::<_, LuaFunction>("nvim_del_mark")?
         .call(name)
 }
 
+/// Corresponds to `vim.api.nvim_del_var`
 pub fn nvim_del_var(lua: &Lua, name: &str) -> LuaResult<()> {
     vim::api::get(lua)?
         .get::<_, LuaFunction>("nvim_del_var")?
         .call(name)
 }
 
+/// Corresponds to `vim.api.nvim_echo`
 pub fn nvim_echo(
     lua: &Lua,
     chunks: LuaTable,
@@ -53,18 +61,21 @@ pub fn nvim_echo(
         .call((chunks, history, opts))
 }
 
+/// Corresponds to `vim.api.nvim_err_write`
 pub fn nvim_err_write(lua: &Lua, msg: &str) -> LuaResult<()> {
     vim::api::get(lua)?
         .get::<_, LuaFunction>("nvim_err_write")?
         .call(msg)
 }
 
+/// Corresponds to `vim.api.nvim_err_writeln`
 pub fn nvim_err_writeln(lua: &Lua, msg: &str) -> LuaResult<()> {
     vim::api::get(lua)?
         .get::<_, LuaFunction>("nvim_err_writeln")?
         .call(msg)
 }
 
+/// Options for `nvim_eval_statusline`
 #[derive(Debug)]
 pub struct EvalStatuslineOpt {
     winid: LuaInteger,
@@ -88,6 +99,7 @@ impl<'a> ToLua<'a> for EvalStatuslineOpt {
     }
 }
 
+/// Result of `nvim_eval_statusline`
 #[derive(Debug)]
 pub struct EvalStatuslineRes {
     pub str: String,
@@ -95,6 +107,7 @@ pub struct EvalStatuslineRes {
     pub highlights: Vec<HighlightInfo>,
 }
 
+/// Highlight info for `nvim_eval_statusline`
 #[derive(Debug)]
 pub struct HighlightInfo {
     pub start: LuaInteger,
@@ -144,6 +157,7 @@ impl<'a> FromLua<'a> for EvalStatuslineRes {
     }
 }
 
+/// Corresponds to `vim.api.nvim_eval_statusline`
 pub fn nvim_eval_statusline<'a>(
     lua: &'a Lua,
     expr: &str,
@@ -154,6 +168,7 @@ pub fn nvim_eval_statusline<'a>(
         .call((expr, opt))
 }
 
+/// Corresponds to `vim.api.nvim_exec_lua`
 pub fn nvim_exec_lua<'a>(
     lua: &'a Lua,
     code: &str,
@@ -164,18 +179,22 @@ pub fn nvim_exec_lua<'a>(
         .call((code, args))
 }
 
+/// Corresponds to `vim.api.nvim_feedkeys`
 pub fn nvim_feedkeys(lua: &Lua, keys: &str, mode: &str, escape_ks: bool) -> LuaResult<()> {
     vim::api::get(lua)?
         .get::<_, LuaFunction>("nvim_feedkeys")?
         .call((keys, mode, escape_ks))
 }
 
+/// Corresponds to `vim.api.nvim_get_api_info`
+// TODO: return type
 pub fn nvim_get_api_info(lua: &Lua) -> LuaResult<(LuaInteger, LuaTable)> {
     vim::api::get(lua)?
         .get::<_, LuaFunction>("nvim_get_api_info")?
         .call(())
 }
 
+/// Info struct for `nvim_get_chan_info`
 #[derive(Debug)]
 pub struct ChannelInfo<'a> {
     pub id: LuaInteger,
@@ -219,19 +238,23 @@ impl<'a> FromLua<'a> for ChannelInfo<'a> {
     }
 }
 
+/// Corresponds to `vim.api.nvim_get_chan_info`
 pub fn nvim_get_chan_info<'a>(lua: &'a Lua, chan: LuaInteger) -> LuaResult<ChannelInfo<'a>> {
     vim::api::get(lua)?
         .get::<_, LuaFunction>("nvim_get_chan_info")?
         .call(chan)
 }
 
+/// Corresponds to `vim.api.nvim_get_color_by_name`
 /// Returns 24-bit RGB value or -1 for invalid color.
-pub fn nvim_get_color_by_name(lua: &Lua, name: &str) -> LuaResult<LuaInteger> {
+pub fn nvim_get_color_by_name(lua: &Lua, name: &str) -> LuaResult<i64> {
     vim::api::get(lua)?
         .get::<_, LuaFunction>("nvim_get_color_by_name")?
         .call(name)
 }
 
+/// Corresponds to `vim.api.nvim_get_color_map`
+// TODO: return type
 pub fn nvim_get_color_map(lua: &Lua) -> LuaResult<LuaTable> {
     vim::api::get(lua)?
         .get::<_, LuaFunction>("nvim_get_color_map")?
@@ -240,49 +263,58 @@ pub fn nvim_get_color_map(lua: &Lua) -> LuaResult<LuaTable> {
 
 pub type GetContextOpt = Vec<String>;
 
+/// Corresponds to `vim.api.nvim_get_context`
+// TODO: return type
 pub fn nvim_get_context(lua: &Lua, opt: Option<GetContextOpt>) -> LuaResult<LuaTable> {
     vim::api::get(lua)?
         .get::<_, LuaFunction>("nvim_get_context")?
         .call(opt)
 }
 
-pub fn nvim_get_current_buf(lua: &Lua) -> LuaResult<LuaInteger> {
+/// Corresponds to `vim.api.nvim_get_current_buf`
+pub fn nvim_get_current_buf(lua: &Lua) -> LuaResult<i64> {
     vim::api::get(lua)?
         .get::<_, LuaFunction>("nvim_get_current_buf")?
         .call(())
 }
 
+/// Corresponds to `vim.api.nvim_get_current_line`
 pub fn nvim_get_current_line(lua: &Lua) -> LuaResult<String> {
     vim::api::get(lua)?
         .get::<_, LuaFunction>("nvim_get_current_line")?
         .call(())
 }
 
-pub fn nvim_get_current_tabpage(lua: &Lua) -> LuaResult<LuaInteger> {
+/// Corresponds to `vim.api.nvim_get_current_tabpage`
+pub fn nvim_get_current_tabpage(lua: &Lua) -> LuaResult<i64> {
     vim::api::get(lua)?
         .get::<_, LuaFunction>("nvim_get_current_tabpage")?
         .call(())
 }
 
-pub fn nvim_get_current_win(lua: &Lua) -> LuaResult<LuaInteger> {
+/// Corresponds to `vim.api.nvim_get_current_win`
+pub fn nvim_get_current_win(lua: &Lua) -> LuaResult<i64> {
     vim::api::get(lua)?
         .get::<_, LuaFunction>("nvim_get_current_win")?
         .call(())
 }
 
+/// Corresponds to `vim.api.nvim_get_hl_by_id`
 pub fn nvim_get_hl_by_id<'a>(lua: &'a Lua, id: LuaInteger, rgb: bool) -> LuaResult<LuaTable<'a>> {
     vim::api::get(lua)?
         .get::<_, LuaFunction>("nvim_get_hl_by_id")?
         .call((id, rgb))
 }
 
+/// Corresponds to `vim.api.nvim_get_hl_by_name`
 pub fn nvim_get_hl_by_name<'a>(lua: &'a Lua, name: &str, rgb: bool) -> LuaResult<LuaTable<'a>> {
     vim::api::get(lua)?
         .get::<_, LuaFunction>("nvim_get_hl_by_name")?
         .call((name, rgb))
 }
 
-pub fn nvim_get_hl_id_by_name(lua: &Lua, name: &str) -> LuaResult<LuaInteger> {
+/// Corresponds to `vim.api.nvim_get_hl_id_by_name`
+pub fn nvim_get_hl_id_by_name(lua: &Lua, name: &str) -> LuaResult<i64> {
     vim::api::get(lua)?
         .get::<_, LuaFunction>("nvim_get_hl_id_by_name")?
         .call(name)
