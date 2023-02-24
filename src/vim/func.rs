@@ -1,6 +1,5 @@
 //! Corresponds to `vim.fn`
 use crate::prelude::*;
-use serde::{Deserialize, Serialize};
 
 /// Gets the `vim.fn` table
 pub fn get(lua: &Lua) -> LuaResult<LuaTable> {

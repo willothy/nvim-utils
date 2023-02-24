@@ -1,7 +1,7 @@
 //! Utilities that don't directly map to the Neovim API but make use of it or extend it
 
 use crate::prelude::*;
-use std::{ffi::c_int, path::PathBuf};
+use std::path::PathBuf;
 
 /// Creats a session at the given path using `mksession!`
 ///
