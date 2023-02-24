@@ -1,8 +1,6 @@
 use crate::prelude::*;
 
-#[cfg(feature = "unstable")]
 mod global;
-#[cfg(feature = "unstable")]
 pub use global::*;
 
 mod buffer;
