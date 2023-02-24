@@ -13,7 +13,6 @@
 //! #### Features
 //! - `builder` enables the [`builder`] module, containing [`ModuleBuilder`](struct@builder) (enabled by default)
 //! - `vim` enables the [`vim`] module (enabled by default)
-//! - `serde` enables the `mlua::serde` module/feature (disabled by default)
 //! - `async` enables async functions in [`builder::ModuleBuilder`], and the `async` feature in mlua (disabled by default)
 //! - `send` enables the `send` feature for [`mlua`], which enables `Send` for lua types (disabled by default)
 
