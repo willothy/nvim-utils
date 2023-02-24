@@ -9,7 +9,7 @@ Using `nvim-utils` is as simple as adding it to your `Cargo.toml`:
 
 ```toml
 [dependencies]
-nvim-utils = "0.1.2"
+nvim-utils = "0.1.3"
 ```
 
 or
