@@ -7,6 +7,7 @@
 //! - Added `vim::ext` for functions that don't directly map to the Neovim api but make use of it or extend it
 //! - Not all functions are implemented yet
 
+pub mod api;
 pub mod ext;
 pub mod func;
 pub mod keymap;
@@ -41,7 +42,7 @@ pub fn get(lua: &Lua) -> LuaResult<LuaTable> {
 /// }
 /// ```
 pub fn cmd(lua: &Lua, cmd: &str) -> LuaResult<()> {
-    self::get(lua)?.call_function("cmd", cmd)
+    self::get(lua)?.get::<_, LuaTable>("cmd")?.call(cmd)
 }
 
 /// Corresponds to `vim.inspect()`
