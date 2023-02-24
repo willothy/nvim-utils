@@ -30,4 +30,13 @@ cargo add nvim-utils
 
 ## Documentation
 
+Check out the examples for a simple example plugin, or my plugin [moveline](https://github.com/willothy/moveline.nvim) for a slightly more complex one.
+
 Open [docs.rs/nvim-utils](https://docs.rs/nvim-utils) for the full documentation.
+
+## Plugins using nvim-utils
+
+If you build a plugin using `nvim-utils`, submit a PR or let me know and I'll list it here!
+
+- [willothy/moveline.nvim](https://github.com/willothy/moveline.nvim): Easily move lines up and down
+
