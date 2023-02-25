@@ -18,7 +18,6 @@
 //! - `unstable` includes unstable / untested API features (disabled by default)
 
 /// Includes [`mlua::prelude`], [`vim`], [`vim::ext::log`], and [`builder::ModuleBuilder`] if the corresponding features are enabled
-/// Also includes [`mlua::serde`] if the `serde` feature is enabled
 pub mod prelude {
     #[cfg(feature = "vim")]
     #[cfg_attr(docsrs, doc(cfg(feature = "vim")))]
@@ -32,13 +31,15 @@ pub mod prelude {
     #[cfg_attr(docsrs, doc(cfg(feature = "builder")))]
     pub use crate::builder::ModuleBuilder;
 
-    #[cfg(feature = "serde")]
-    #[cfg_attr(docsrs, doc(cfg(feature = "serde")))]
     pub use mlua::serde::{Deserializer, LuaSerdeExt, Serializer};
 
     pub use mlua::lua_module;
     pub use mlua::prelude::*;
 }
+
+#[allow(unused_imports)]
+#[macro_use]
+extern crate nvim_utils_macros;
 
 #[cfg(feature = "builder")]
 #[cfg_attr(docsrs, doc(cfg(feature = "builder")))]
