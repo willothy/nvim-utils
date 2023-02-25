@@ -3,7 +3,7 @@ use mlua::lua_State;
 use proc_macro::TokenStream;
 use proc_macro2::Span;
 use quote::quote;
-use syn::{AttributeArgs, Error, Path, Result};
+use syn::{AttributeArgs, Error, Ident, Path, Result};
 
 struct Plugin {
     path: Path,
@@ -47,7 +47,7 @@ pub fn module(attr: TokenStream, item: TokenStream) -> TokenStream {
         .join("_");
 
     let func = syn::parse_macro_input!(item as syn::ItemFn);
-    let name = func.sig.ident.to_string();
+    let name = func.sig.ident.clone();
 
     let entry = Ident::new(&format!("luaopen_{path}"), Span::call_site());
     let wrapped = quote! {
