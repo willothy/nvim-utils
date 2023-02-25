@@ -40,6 +40,7 @@ pub mod prelude {
 #[allow(unused_imports)]
 #[macro_use]
 extern crate nvim_utils_macros;
+pub use nvim_utils_macros::module;
 
 #[cfg(feature = "builder")]
 #[cfg_attr(docsrs, doc(cfg(feature = "builder")))]

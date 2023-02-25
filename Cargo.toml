@@ -1,6 +1,6 @@
 [package]
 name = "nvim-utils"
-version = "0.1.5"
+version = "0.1.6"
 edition = "2021"
 description = "Utilities for writing neovim plugins in rust"
 authors = ["Will Hopkins <willothyh@gmail.com>"]
