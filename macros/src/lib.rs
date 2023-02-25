@@ -49,7 +49,7 @@ pub fn module(attr: TokenStream, item: TokenStream) -> TokenStream {
     let func = syn::parse_macro_input!(item as syn::ItemFn);
     let name = func.sig.ident.to_string();
 
-    let entry = format!("luaopen_{}", path);
+    let entry = Ident::new(&format!("luaopen_{path}"), Span::call_site());
     let wrapped = quote! {
         #func
 
