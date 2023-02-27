@@ -1,4 +1,6 @@
 //! Corresponds to `vim.fn`
+use std::path::PathBuf;
+
 use crate::prelude::*;
 
 /// Gets the `vim.fn` table
@@ -116,4 +118,11 @@ pub fn setline(lua: &Lua, line: u64, text: &str) -> LuaResult<bool> {
     self::get(lua)?
         .get::<_, LuaFunction>("setline")?
         .call((line, text))
+}
+
+/// Corresponds to `vim.fn.getcwd`
+pub fn getcwd(lua: &Lua, win_num: Option<u64>, tab_num: Option<u64>) -> LuaResult<PathBuf> {
+    let cwd = self::get(lua)?
+        .call_function::<_, _, String>("getcwd", (win_num.unwrap_or(0), tab_num.unwrap_or(0)))?;
+    Ok(PathBuf::from(cwd))
 }
