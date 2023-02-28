@@ -23,7 +23,7 @@ cargo add nvim-utils
 
 ## Documentation
 
-Check out the examples for a simple example plugin, or my plugin [moveline](https://github.com/willothy/moveline.nvim) for a slightly more complex one.
+Check out the examples for a simple example plugin, or my plugins [moveline](https://github.com/willothy/moveline.nvim) and [blam](https://github.com/willothy/blam.nvim) for slightly more complex ones.
 
 Open [docs.rs/nvim-utils](https://docs.rs/nvim-utils) for the full documentation.
 
