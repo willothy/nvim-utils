@@ -12,6 +12,7 @@ pub mod ext;
 pub mod func;
 pub mod keymap;
 pub mod log;
+pub mod v;
 
 use crate::prelude::*;
 

@@ -5,14 +5,7 @@
 
 Interacting with Neovim's lua api in Rust can be a bit of a pain. `nvim-utils` aims to make it easier and quicker to develop Neovim plugins in Rust by removing as much of the required boilerplate as possible, and implementing bindings for the `vim.*` lua api.
 
-Using `nvim-utils` is as simple as adding it to your `Cargo.toml`:
-
-```toml
-[dependencies]
-nvim-utils = "0.1.10"
-```
-
-or
+## Installation
 
 ```sh
 cargo add nvim-utils
