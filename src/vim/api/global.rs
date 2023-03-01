@@ -1,3 +1,5 @@
+#[cfg(feature = "unstable")]
+#[cfg_attr(docsrs, doc(cfg(feature = "unstable")))]
 use serde::{Deserialize, Serialize};
 
 use crate::prelude::*;
@@ -37,22 +39,20 @@ pub fn nvim_feedkeys(lua: &Lua, keys: &str, mode: &str, escape_ks: bool) -> LuaR
     vim::api::get(lua)?.call_function("nvim_feedkeys", (keys, mode, escape_ks))
 }
 
-#[derive(Clone, Serialize, Deserialize)]
+/// Result struct for `vim.api.nvim_get_mode`
 #[cfg(feature = "unstable")]
 #[cfg_attr(docsrs, doc(cfg(feature = "unstable")))]
+#[derive(Clone, Deserialize)]
 pub struct GetModeRes {
     pub mode: String,
     pub blocking: bool,
 }
 
-#[cfg(feature = "unstable")]
-#[cfg_attr(docsrs, doc(cfg(feature = "unstable")))]
-impl LuaUserData for GetModeRes {}
-
+/// Corresponds to `vim.api.nvim_get_mode`
 #[cfg(feature = "unstable")]
 #[cfg_attr(docsrs, doc(cfg(feature = "unstable")))]
 pub fn nvim_get_mode(lua: &Lua) -> LuaResult<GetModeRes> {
-    vim::api::get(lua)?.call_function("nvim_get_mode", ())
+    lua.from_value(vim::api::get(lua)?.call_function("nvim_get_mode", ())?)
 }
 
 /// Corresponds to `vim.api.nvim_stats`
