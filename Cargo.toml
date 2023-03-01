@@ -1,6 +1,6 @@
 [package]
 name = "nvim-utils"
-version = "0.1.11"
+version = "0.1.12"
 edition = "2021"
 description = "Utilities for writing neovim plugins in rust"
 authors = ["Will Hopkins <willothyh@gmail.com>"]
@@ -30,10 +30,10 @@ members = ["macros"]
 
 [dependencies]
 mlua = { version = "0.8.7", features = [
-    "luajit",
-    "vendored",
-    "module",
-    "serialize",
+	"luajit",
+	"vendored",
+	"module",
+	"serialize",
 ] }
 serde = { version = "1.0.152", features = ["derive"] }
 nvim-utils-macros = { version = "0.1.1", path = "macros" }
