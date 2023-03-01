@@ -478,35 +478,6 @@ pub fn nvim_get_mark(
 
 #[cfg(feature = "unstable")]
 #[cfg_attr(docsrs, doc(cfg(feature = "unstable")))]
-#[derive(Debug)]
-pub struct GetModeRes {
-    pub blocking: bool,
-    pub mode: String,
-}
-
-#[cfg(feature = "unstable")]
-#[cfg_attr(docsrs, doc(cfg(feature = "unstable")))]
-impl<'a> FromLua<'a> for GetModeRes {
-    fn from_lua(lua_value: LuaValue<'a>, _lua: &'a Lua) -> LuaResult<Self> {
-        match lua_value {
-            LuaValue::Table(table) => {
-                let blocking = table.get::<_, bool>("blocking")?;
-                let mode = table.get::<_, String>("mode")?;
-                Ok(GetModeRes { blocking, mode })
-            }
-            _ => {
-                return Err(LuaError::FromLuaConversionError {
-                    from: "LuaValue",
-                    to: "GetModeRes",
-                    message: Some("Expected LuaValue::Table".to_string()),
-                })
-            }
-        }
-    }
-}
-
-#[cfg(feature = "unstable")]
-#[cfg_attr(docsrs, doc(cfg(feature = "unstable")))]
 pub fn nvim_get_proc<'a>(lua: &'a Lua, pid: LuaInteger) -> LuaResult<LuaValue<'a>> {
     vim::api::get(lua)?
         .get::<_, LuaFunction>("nvim_get_proc")?
