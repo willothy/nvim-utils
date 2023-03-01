@@ -126,3 +126,8 @@ pub fn getcwd(lua: &Lua, win_num: Option<u64>, tab_num: Option<u64>) -> LuaResul
         .call_function::<_, _, String>("getcwd", (win_num.unwrap_or(0), tab_num.unwrap_or(0)))?;
     Ok(PathBuf::from(cwd))
 }
+
+/// Corresponds to `vim.fn.mode`
+pub fn mode(lua: &Lua) -> LuaResult<String> {
+    vim::func::get(lua)?.call_function("mode", ())
+}

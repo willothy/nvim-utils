@@ -16,15 +16,33 @@ pub fn nvim_buf_detach(lua: &Lua, buffer: u64) -> LuaResult<()> {
 }
 
 /// Corresponds to `vim.api.nvim_buf_set_lines`
-pub fn nvim_buf_set_lines(
+pub fn nvim_buf_set_lines<S: Into<String>>(
     lua: &Lua,
     buffer: u64,
     start: u64,
     end: u64,
     strict_indexing: bool,
-    lines: Vec<&str>,
+    lines: Vec<S>,
 ) -> LuaResult<()> {
-    vim::api::get(lua)?
-        .get::<_, LuaFunction>("nvim_buf_set_lines")?
-        .call((buffer, start, end, strict_indexing, lines))
+    vim::api::get(lua)?.call_function(
+        "nvim_buf_set_lines",
+        (
+            buffer,
+            start,
+            end,
+            strict_indexing,
+            lines.into_iter().map(|s| s.into()).collect::<Vec<_>>(),
+        ),
+    )
+}
+
+/// Corresponds to `vim.api.nvim_buf_get_lines`
+pub fn nvim_buf_get_lines(
+    lua: &Lua,
+    buffer: u64,
+    start: u64,
+    end: u64,
+    strict_indexing: bool,
+) -> LuaResult<Vec<String>> {
+    vim::api::get(lua)?.call_function("nvim_buf_get_lines", (buffer, start, end, strict_indexing))
 }

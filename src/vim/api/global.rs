@@ -1,3 +1,5 @@
+use serde::{Deserialize, Serialize};
+
 use crate::prelude::*;
 
 /// Corresponds to `vim.api.nvim_get_current_buf`
@@ -28,6 +30,29 @@ pub fn nvim_list_bufs(lua: &Lua) -> LuaResult<Vec<LuaInteger>> {
 /// Corresponds to `vim.api.nvim_exec`
 pub fn nvim_exec<'a>(lua: &'a Lua, cmd: &str, output: bool) -> LuaResult<LuaValue<'a>> {
     vim::api::get(lua)?.call_function("nvim_exec", (cmd, output))
+}
+
+/// Corresponds to `vim.api.nvim_feedkeys`
+pub fn nvim_feedkeys(lua: &Lua, keys: &str, mode: &str, escape_ks: bool) -> LuaResult<()> {
+    vim::api::get(lua)?.call_function("nvim_feedkeys", (keys, mode, escape_ks))
+}
+
+#[derive(Clone, Serialize, Deserialize)]
+#[cfg(feature = "unstable")]
+#[cfg_attr(docsrs, doc(cfg(feature = "unstable")))]
+pub struct GetModeRes {
+    pub mode: String,
+    pub blocking: bool,
+}
+
+#[cfg(feature = "unstable")]
+#[cfg_attr(docsrs, doc(cfg(feature = "unstable")))]
+impl LuaUserData for GetModeRes {}
+
+#[cfg(feature = "unstable")]
+#[cfg_attr(docsrs, doc(cfg(feature = "unstable")))]
+pub fn nvim_get_mode(lua: &Lua) -> LuaResult<GetModeRes> {
+    vim::api::get(lua)?.call_function("nvim_get_mode", ())
 }
 
 /// Corresponds to `vim.api.nvim_stats`
@@ -243,15 +268,6 @@ pub fn nvim_exec_lua<'a>(
     vim::api::get(lua)?
         .get::<_, LuaFunction>("nvim_exec_lua")?
         .call((code, args))
-}
-
-/// Corresponds to `vim.api.nvim_feedkeys`
-#[cfg(feature = "unstable")]
-#[cfg_attr(docsrs, doc(cfg(feature = "unstable")))]
-pub fn nvim_feedkeys(lua: &Lua, keys: &str, mode: &str, escape_ks: bool) -> LuaResult<()> {
-    vim::api::get(lua)?
-        .get::<_, LuaFunction>("nvim_feedkeys")?
-        .call((keys, mode, escape_ks))
 }
 
 /// Corresponds to `vim.api.nvim_get_api_info`
@@ -487,14 +503,6 @@ impl<'a> FromLua<'a> for GetModeRes {
             }
         }
     }
-}
-
-#[cfg(feature = "unstable")]
-#[cfg_attr(docsrs, doc(cfg(feature = "unstable")))]
-pub fn nvim_get_mode(lua: &Lua) -> LuaResult<GetModeRes> {
-    vim::api::get(lua)?
-        .get::<_, LuaFunction>("nvim_get_mode")?
-        .call(())
 }
 
 #[cfg(feature = "unstable")]
