@@ -1,4 +1,6 @@
 //! Corresponds to `vim.fn`
+use luajit::{cstr::AsCStr, pop::Pop, push::Push};
+use nvim_utils_luajit as luajit;
 use std::path::PathBuf;
 
 use crate::prelude::*;
@@ -19,8 +21,19 @@ pub fn tmpname(lua: &Lua) -> LuaResult<String> {
 }
 
 /// Corresponds to `vim.fn.line`
-pub fn line(lua: &Lua, line: &str) -> LuaResult<u64> {
-    self::get(lua)?.get::<_, LuaFunction>("line")?.call(line)
+pub fn line(line: &str) -> Result<usize, anyhow::Error> {
+    unsafe {
+        luajit::state::with_state(|state| -> Result<usize, anyhow::Error> {
+            line.push(state)?;
+            luajit::ffi::lua_getglobal(state, "line\0".as_cstr());
+            luajit::ffi::lua_getfield(state, -1, "fn\0".as_cstr());
+            luajit::ffi::lua_getfield(state, -1, "line\0".as_cstr());
+            luajit::ffi::lua_call(state, 1, 1);
+            let res = usize::pop(state)?;
+            luajit::ffi::lua_pop(state, 2);
+            Ok(res)
+        })
+    }
 }
 
 /// Corresponds to `vim.fn.foldclosedend`

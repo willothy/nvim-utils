@@ -1,5 +1,3 @@
-use std::cell::RefCell;
-
 use once_cell::unsync::OnceCell;
 
 use crate::ffi::LuaState;

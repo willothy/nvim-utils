@@ -37,6 +37,8 @@ mlua = { version = "0.8.7", features = [
 ] }
 serde = { version = "1.0.152", features = ["derive"] }
 nvim-utils-macros = { version = "0.1.1", path = "macros" }
+nvim-utils-luajit = { path = "luajit" }
+anyhow = "1.0.69"
 
 [dev-dependencies]
 fs_extra = "1.3.0"

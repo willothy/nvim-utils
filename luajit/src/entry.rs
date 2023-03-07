@@ -1,5 +1,6 @@
 use std::ffi::c_int;
 
+use crate::core;
 use crate::ffi::LuaState;
 use crate::push::Push;
 use crate::{error, state};
@@ -12,6 +13,8 @@ where
     E: std::error::Error,
 {
     state::init(state);
+
+    core::setup_panic_handler();
 
     match plugin() {
         Ok(module) => module.push(state).unwrap(),
