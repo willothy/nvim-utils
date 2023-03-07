@@ -1,5 +1,4 @@
 #[allow(unused_imports)]
-use mlua::lua_State;
 use proc_macro::TokenStream;
 use proc_macro2::Span;
 use quote::quote;
@@ -54,10 +53,8 @@ pub fn module(attr: TokenStream, item: TokenStream) -> TokenStream {
         #func
 
         #[no_mangle]
-        unsafe extern "C" fn #entry(state: *mut lua_State) -> std::os::raw::c_int {
-            mlua::Lua::init_from_ptr(state)
-                .entrypoint1(#name)
-                .expect("failed to register module")
+        unsafe extern "C" fn #entry(state: *mut ::luajit::ffi::LuaState) -> std::os::raw::c_int {
+            ::luajit::entry::entry(state, #name)
         }
     };
 
