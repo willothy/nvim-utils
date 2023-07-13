@@ -6,7 +6,7 @@
 Interacting with Neovim's lua api in Rust can be a bit of a pain. `nvim-utils` aims to make it easier and quicker to develop Neovim plugins in Rust by removing as much of the required boilerplate as possible, and implementing bindings for the `vim.*` lua api.
 
 > **Warning**  
-> This library is in a relatively early state and will change significantly.   
+> This library is no longer maintained.   
 > For a more polished API, check out [nvim-oxi](https://github.com/noib3/nvim-oxi).   
 
 ## Current plans
